@@ -117,66 +117,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+<script setup lang="ts">
+import {useMainStore} from "../../store/main-store";
 
-import { appName } from '@/env';
-import { readDashboardMiniDrawer, readDashboardShowDrawer, readHasAdminAccess } from '@/store/main/getters';
-import { commitSetDashboardShowDrawer, commitSetDashboardMiniDrawer } from '@/store/main/mutations';
-import { dispatchUserLogOut } from '@/store/main/actions';
+const store = useMainStore();
 
-const routeGuardMain = async (to, from, next) => {
-  if (to.path === '/main') {
-    next('/main/dashboard');
-  } else {
-    next();
-  }
-};
 
-@Component
-export default class Main extends Vue {
-  public appName = appName;
-
-  public beforeRouteEnter(to, from, next) {
-    routeGuardMain(to, from, next);
-  }
-
-  public beforeRouteUpdate(to, from, next) {
-    routeGuardMain(to, from, next);
-  }
-
-  get miniDrawer() {
-    return readDashboardMiniDrawer(this.$store);
-  }
-
-  get showDrawer() {
-    return readDashboardShowDrawer(this.$store);
-  }
-
-  set showDrawer(value) {
-    commitSetDashboardShowDrawer(this.$store, value);
-  }
-
-  public switchShowDrawer() {
-    commitSetDashboardShowDrawer(
-      this.$store,
-      !readDashboardShowDrawer(this.$store),
-    );
-  }
-
-  public switchMiniDrawer() {
-    commitSetDashboardMiniDrawer(
-      this.$store,
-      !readDashboardMiniDrawer(this.$store),
-    );
-  }
-
-  public get hasAdminAccess() {
-    return readHasAdminAccess(this.$store);
-  }
-
-  public async logout() {
-    await dispatchUserLogOut(this.$store);
-  }
-}
 </script>

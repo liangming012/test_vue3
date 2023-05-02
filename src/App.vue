@@ -14,25 +14,24 @@
           </v-row>
         </v-container>
       </v-main>
-      <NotificationsManager></NotificationsManager>
+<!--      <NotificationsManager></NotificationsManager>-->
     </v-app>
   </div>
 </template>
 
-<script lang="ts">
-import {useMainStore} from './store/main-store';
+<!--<script lang="ts">-->
+<!--import {useMainStore} from './store/main-store';-->
 
-export default {
-  setup(){
-    const store = useMainStore();
-    return {store};
-  }
-}
-</script>
-
-
-<!--<script setup lang="ts">-->
-<!--import {useMainStore} from './store/main-store'-->
-<!--const store = useMainStore();-->
-
+<!--export default {-->
+<!--  setup(){-->
+<!--    const store = useMainStore();-->
+<!--    return {store};-->
+<!--  }-->
+<!--}-->
 <!--</script>-->
+
+
+<script setup lang="ts">
+import {useMainStore} from './store/main-store';
+const store = useMainStore();
+</script>

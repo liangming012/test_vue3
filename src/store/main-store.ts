@@ -118,7 +118,8 @@ export const useMainStore = defineStore('main', {
       }
     },
     actionRouteLoggedIn() {
-      if (router.currentRoute.path === '/login' || router.currentRoute.path === '/') {
+      console.log(router.currentRoute.value.path);
+      if (router.currentRoute.value.path === '/login' || router.currentRoute.value.path === '/') {
         router.push('/main');
       }
     },
