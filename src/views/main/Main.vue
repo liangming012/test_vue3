@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <v-navigation-drawer persistent :mini-variant="miniDrawer" v-model="showDrawer" fixed app>
-      <v-layout column fill-height>
+  <v-app>
+    <v-navigation-drawer persistent :mini-variant="store.dashboardMiniDrawer" v-model="store.dashboardShowDrawer" fixed app>
+      <v-container column fill-height>
         <v-list>
           <v-subheader>Main menu</v-subheader>
           <v-list-tile to="/main/dashboard">
@@ -38,7 +38,7 @@
           </v-list-tile>
         </v-list>
         <v-divider></v-divider>
-        <v-list subheader v-show="hasAdminAccess">
+        <v-list subheader v-show="store.hasAdminAccess">
           <v-subheader>Admin</v-subheader>
           <v-list-tile to="/main/admin/users/all">
             <v-list-tile-action>
@@ -59,7 +59,7 @@
         </v-list>
         <v-spacer></v-spacer>
         <v-list>
-          <v-list-tile @click="logout">
+          <v-list-tile @click="store.actionUserLogOut">
             <v-list-tile-action>
               <v-icon>close</v-icon>
             </v-list-tile-action>
@@ -70,17 +70,17 @@
           <v-divider></v-divider>
           <v-list-tile @click="switchMiniDrawer">
             <v-list-tile-action>
-              <v-icon v-html="miniDrawer ? 'chevron_right' : 'chevron_left'"></v-icon>
+              <v-icon v-html="store.dashboardMiniDrawer ? 'chevron_right' : 'chevron_left'"></v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Collapse</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
-      </v-layout>
+      </v-container>
     </v-navigation-drawer>
     <v-toolbar dark color="primary" app>
-      <v-toolbar-side-icon @click.stop="switchShowDrawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="store.dashboardShowDrawer"></v-toolbar-side-icon>
       <v-toolbar-title v-text="appName"></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu bottom left offset-y>
@@ -96,7 +96,7 @@
               <v-icon>person</v-icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile @click="logout">
+          <v-list-tile @click="store.actionUserLogOut">
             <v-list-tile-content>
               <v-list-tile-title>Logout</v-list-tile-title>
             </v-list-tile-content>
@@ -114,13 +114,16 @@
       <v-spacer></v-spacer>
       <span>&copy; {{appName}}</span>
     </v-footer>
-  </div>
+  </v-app>
 </template>
 
 <script setup lang="ts">
+import { appName } from '../../env';
 import {useMainStore} from "../../store/main-store";
 
 const store = useMainStore();
-
+const switchMiniDrawer = () => {
+  store.dashboardMiniDrawer = ! store.dashboardMiniDrawer;
+}
 
 </script>
